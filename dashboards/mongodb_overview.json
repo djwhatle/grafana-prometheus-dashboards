@@ -38,7 +38,7 @@
   "hideControls": false,
   "id": null,
   "links": [],
-  "refresh": false,
+  "refresh": "5m",
   "rows": [
     {
       "collapse": false,
@@ -75,11 +75,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_op_counters_total",
+              "expr": "mongodb_op_counters_total{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{type}}",
               "refId": "A",
-              "step": 60
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -147,11 +147,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_memory{instance=\"$node\"}",
+              "expr": "mongodb_memory{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{type}}",
               "refId": "A",
-              "step": 60
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -233,11 +233,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_network_bytes_total",
+              "expr": "mongodb_network_bytes_total{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{state}}",
               "refId": "A",
-              "step": 60
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -304,11 +304,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_connections{instance=\"$node\"}",
+              "expr": "mongodb_connections{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{state}}",
               "refId": "A",
-              "step": 60
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -387,11 +387,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_extra_info_page_faults_total{instance=\"$node\"}",
+              "expr": "mongodb_extra_info_page_faults_total{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 60
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -458,11 +458,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_extra_info_heap_usage_bytes{instance=\"$node\"}",
+              "expr": "mongodb_extra_info_heap_usage_bytes{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 60
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -541,11 +541,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_global_lock_client{instance=\"$node\"}",
+              "expr": "mongodb_global_lock_client{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{type}}",
               "refId": "A",
-              "step": 120
+              "step": 4
             }
           ],
           "thresholds": [],
@@ -612,11 +612,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_global_lock_current_queue{instance=\"$node\"}",
+              "expr": "mongodb_global_lock_current_queue{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{type}}",
               "refId": "A",
-              "step": 120
+              "step": 4
             }
           ],
           "thresholds": [],
@@ -683,11 +683,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_global_lock_total{instance=\"$node\"}",
+              "expr": "mongodb_global_lock_total{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 120
+              "step": 4
             }
           ],
           "thresholds": [],
@@ -766,11 +766,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_background_flushing_average_milliseconds{instance=\"$node\"}",
+              "expr": "mongodb_background_flushing_average_milliseconds{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 120
+              "step": 4
             }
           ],
           "thresholds": [],
@@ -837,11 +837,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_background_flushing_last_milliseconds{instance=\"$node\"}",
+              "expr": "mongodb_background_flushing_last_milliseconds{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 120
+              "step": 4
             }
           ],
           "thresholds": [],
@@ -908,11 +908,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_background_flushing_total_milliseconds{instance=\"$node\"}",
+              "expr": "mongodb_background_flushing_total_milliseconds{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 120
+              "step": 4
             }
           ],
           "thresholds": [],
@@ -991,11 +991,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb_instance_uptime_seconds{instance=\"$node\"}/3600",
+              "expr": "mongodb_instance_uptime_seconds{instance=~\"$node\"}/3600",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 30
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -1073,7 +1073,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1103,5 +1103,5 @@
   },
   "timezone": "browser",
   "title": "MongoDB",
-  "version": 18
+  "version": 1
 }
