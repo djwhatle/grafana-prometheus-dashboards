@@ -38,7 +38,7 @@
   "hideControls": false,
   "id": null,
   "links": [],
-  "refresh": false,
+  "refresh": "5m",
   "rows": [
     {
       "collapse": false,
@@ -73,11 +73,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_scoreboard{instance=\"$node\"}",
+              "expr": "apache_scoreboard{instance=~\"$node\"}",
+              "hide": false,
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{state}}",
+              "metric": "apache_scoreboard",
               "refId": "A",
-              "step": 20
+              "step": 30
             }
           ],
           "thresholds": [],
@@ -144,11 +146,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_accesses_total{instance=\"$node\"}",
+              "expr": "apache_accesses_total{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 30
+              "step": 60
             }
           ],
           "thresholds": [],
@@ -221,7 +223,7 @@
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 30
+              "step": 60
             }
           ],
           "thresholds": [],
@@ -300,7 +302,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_scoreboard{instance=\"$node\", state=\"read\"}",
+              "expr": "apache_scoreboard{instance=~\"$node\", state=\"read\"}",
               "interval": "1m",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{state}}",
@@ -308,7 +310,7 @@
               "step": 120
             },
             {
-              "expr": "apache_scoreboard{instance=\"$node\", state=\"reply\"}",
+              "expr": "apache_scoreboard{instance=~\"$node\", state=\"reply\"}",
               "interval": "1m",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{state}}",
@@ -383,7 +385,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_workers{instance=\"$node\"}",
+              "expr": "apache_workers{instance=~\"$node\"}",
               "interval": "1m",
               "intervalFactor": 2,
               "legendFormat": "{{instance}} - {{state}}",
@@ -467,11 +469,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_scoreboard{instance=\"$node\",state=\"logging\"}",
+              "expr": "apache_scoreboard{instance=~\"$node\",state=\"logging\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 30
+              "step": 60
             }
           ],
           "thresholds": [],
@@ -538,11 +540,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_up{instance=\"$node\"}",
+              "expr": "apache_up{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 30
+              "step": 60
             }
           ],
           "thresholds": [],
@@ -609,11 +611,11 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_scoreboard{instance=\"$node\", state=\"closing\"}",
+              "expr": "apache_scoreboard{instance=~\"$node\", state=\"closing\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 20
+              "step": 30
             }
           ],
           "thresholds": [],
@@ -692,7 +694,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_uptime_seconds_total{instance=\"$node\"} / 3600",
+              "expr": "apache_uptime_seconds_total{instance=~\"$node\"} / 3600",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
@@ -756,7 +758,7 @@
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": null,
         "multi": true,
         "name": "node",
@@ -774,8 +776,8 @@
     ]
   },
   "time": {
-    "from": "2017-04-11T17:47:23.438Z",
-    "to": "2017-04-11T20:53:22.097Z"
+    "from": "now-6h",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -804,5 +806,5 @@
   },
   "timezone": "browser",
   "title": "Apache",
-  "version": 3
+  "version": 5
 }
