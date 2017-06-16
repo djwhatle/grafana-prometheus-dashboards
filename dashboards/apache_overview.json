@@ -34,89 +34,16 @@
   },
   "editable": true,
   "gnetId": null,
-  "graphTooltip": 2,
+  "graphTooltip": 0,
   "hideControls": false,
   "id": null,
   "links": [],
-  "refresh": "5m",
+  "refresh": false,
   "rows": [
     {
       "collapse": false,
-      "height": 388,
+      "height": 395,
       "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "fill": 1,
-          "id": 2,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 6,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "apache_scoreboard{instance=~\"$node\"}",
-              "hide": false,
-              "intervalFactor": 2,
-              "legendFormat": "{{instance}} - {{state}}",
-              "metric": "apache_scoreboard",
-              "refId": "A",
-              "step": 30
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Activity Scoreboard",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
         {
           "aliasColors": {},
           "bars": false,
@@ -141,7 +68,7 @@
           "points": true,
           "renderer": "flot",
           "seriesOverrides": [],
-          "span": 3,
+          "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -150,7 +77,7 @@
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 60
+              "step": 1200
             }
           ],
           "thresholds": [],
@@ -214,16 +141,16 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
-          "span": 3,
+          "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_sent_kilobytes_total",
+              "expr": "apache_sent_kilobytes_total{instance=~\"$node\"}",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 60
+              "step": 1200
             }
           ],
           "thresholds": [],
@@ -438,7 +365,7 @@
     },
     {
       "collapse": false,
-      "height": 249,
+      "height": 254,
       "panels": [
         {
           "aliasColors": {},
@@ -473,7 +400,7 @@
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 60
+              "step": 2400
             }
           ],
           "thresholds": [],
@@ -544,7 +471,7 @@
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 60
+              "step": 2400
             }
           ],
           "thresholds": [],
@@ -586,8 +513,11 @@
           "aliasColors": {},
           "bars": false,
           "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
           "fill": 1,
-          "id": 7,
+          "grid": {},
+          "id": 12,
           "legend": {
             "avg": false,
             "current": false,
@@ -598,34 +528,52 @@
             "values": false
           },
           "lines": true,
-          "linewidth": 1,
+          "linewidth": 2,
           "links": [],
-          "nullPointMode": "null",
+          "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [],
+          "seriesOverrides": [
+            {
+              "alias": "Load",
+              "color": "#DEDAF7",
+              "fill": 0,
+              "stack": false,
+              "yaxis": 2
+            }
+          ],
           "span": 6,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache_scoreboard{instance=~\"$node\", state=\"closing\"}",
+              "expr": "sum(irate(node_cpu{mode!=\"idle\", instance=~\"$node\"}[1m])) by (mode)",
+              "hide": true,
               "intervalFactor": 2,
-              "legendFormat": "{{instance}}",
+              "legendFormat": "{{mode}}",
+              "metric": "node_",
               "refId": "A",
               "step": 30
+            },
+            {
+              "expr": "node_load1{instance=~\"$node\"}",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}} - load",
+              "refId": "B",
+              "step": 1200
             }
           ],
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Connections Closed",
+          "title": "CPU Load",
           "tooltip": {
+            "msResolution": false,
             "shared": true,
             "sort": 0,
-            "value_type": "individual"
+            "value_type": "cumulative"
           },
           "type": "graph",
           "xaxis": {
@@ -636,7 +584,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "percentunit",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -644,8 +592,8 @@
               "show": true
             },
             {
-              "format": "short",
-              "label": null,
+              "format": "none",
+              "label": "Load",
               "logBase": 1,
               "max": null,
               "min": null,
@@ -689,7 +637,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
-          "span": 12,
+          "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -698,7 +646,7 @@
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
               "refId": "A",
-              "step": 20
+              "step": 1200
             }
           ],
           "thresholds": [],
@@ -720,6 +668,77 @@
           "yaxes": [
             {
               "format": "h",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "fill": 1,
+          "id": 7,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "apache_scoreboard{instance=~\"$node\", state=\"closing\"}",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}}",
+              "refId": "A",
+              "step": 1200
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Connections Closed",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -776,7 +795,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now/w",
     "to": "now"
   },
   "timepicker": {
@@ -806,5 +825,5 @@
   },
   "timezone": "browser",
   "title": "Apache",
-  "version": 5
+  "version": 13
 }
